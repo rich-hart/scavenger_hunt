@@ -21,7 +21,6 @@ class TestProfile(APITestCase):
         self.assertFalse(response.data)
 
     def test_view(self):
-        import ipdb; ipdb.set_trace()
         self.client.force_login(self.user)
         response = self.client.get(self.url, format='json')
         self.assertTrue(response.data)
