@@ -5,5 +5,5 @@ from .models import Player
 
 def create_player(sender, instance, created, **kwargs):
     if created:
-        Player.objects.create(user=instance)
+        Player.objects.create(profile=instance)
 
