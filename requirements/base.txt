@@ -1,0 +1,5 @@
+djangorestframework
+social-auth-app-django
+fuzzywuzzy
+python-Levenshtein
+django-filter
