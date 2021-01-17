@@ -8,10 +8,9 @@ class Profile(Base):
     """
     # NOTE Try not to overwrite User class. 
     # Use Profile instead
-    owner = models.OneToOneField(
+    user = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
-        related_name='owner',
     )
     nick_name = models.CharField(max_length=2**6)
     def __str__(self):
