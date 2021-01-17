@@ -1,0 +1,13 @@
+venv/
+
+.log
+*.log
+
+__pycache__/
+*/__pycache__/
+*.pyc
+*.DS_Store
+
+*.swp
+
+
