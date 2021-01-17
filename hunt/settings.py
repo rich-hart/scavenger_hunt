@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     
     'hunt',
     'users',
+    'games',
 ]
 
 MIDDLEWARE = [
