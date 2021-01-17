@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
+from rest_framework.test import force_authenticate
+
 class TestProfile(APITestCase):
     def setUp(self):
         self.url = reverse('profile-list')
@@ -17,4 +19,10 @@ class TestProfile(APITestCase):
     def test_anonymous_view(self):
         response = self.client.get(self.url, format='json')
         self.assertFalse(response.data)
+
+    def test_view(self):
+        import ipdb; ipdb.set_trace()
+        self.client.force_login(self.user)
+        response = self.client.get(self.url, format='json')
+        self.assertTrue(response.data)
 

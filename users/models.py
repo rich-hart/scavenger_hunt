@@ -12,7 +12,7 @@ class Profile(Base):
         User,
         on_delete=models.CASCADE,
     )
-    nick_name = models.CharField(max_length=2**6)
+    nickname = models.CharField(max_length=2**6,blank=True,null=True)
     def __str__(self):
         return '%s: %s %s' % (
             str(self.user.pk),

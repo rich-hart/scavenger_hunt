@@ -15,5 +15,5 @@ class ProfileViewSet(viewsets.ModelViewSet):
         user = self.request.user
         if isinstance(user, AnonymousUser):
             return []
-        return Profile.objects.filter(owner=user)
+        return [user.profile]
     
