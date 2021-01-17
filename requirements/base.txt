@@ -3,3 +3,5 @@ social-auth-app-django
 fuzzywuzzy
 python-Levenshtein
 django-filter
+django-storages
+boto3
