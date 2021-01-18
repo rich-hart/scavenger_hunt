@@ -54,7 +54,7 @@ class Challenge(Base):
         null=True,
         blank=True,
     )
-    index = models.IntegerField()
+    index = models.IntegerField(default=0)
 
     class Meta:
         ordering = ['index','id']
@@ -67,18 +67,16 @@ class Achievement(Base):
     player = models.ForeignKey(
         Player,
         on_delete=models.CASCADE,
-#        related_name='player_achievements',
-#        related_query_name='player_achievements',
     )
     challenge = models.ForeignKey(
         Challenge,
         on_delete=models.DO_NOTHING,
     )
-    verified = models.DateTimeField(
-        default=None,
-        null=True,
-        blank=True,
-    )
+#    verified = models.DateTimeField(
+#        default=None,
+#        null=True,
+#        blank=True,
+#    )
 
 
 class Reward(Base):
@@ -100,16 +98,14 @@ class Reward(Base):
         Challenge,
         on_delete=models.DO_NOTHING,
     )
-
     category = models.CharField(
         max_length=127,
         default = Type.general.value,
         choices=Type.get_choices(),
     )
-
     description = models.TextField()
-
-    unique = models.BooleanField(default=False)
+    unique = models.BooleanField(default=True)
+    rate = models.FloatField(default=1.0)
 
     class Meta:
         ordering = ['-created']

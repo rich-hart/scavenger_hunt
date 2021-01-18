@@ -5,11 +5,29 @@ from .models import *
 class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
-        fields = ('id','text', 'video','picture')
+        fields = ('text', 'video','picture')
 
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        fields = ('id','text', )
+        fields = ('text', )
 
+class ProblemSerializer(serializers.ModelSerializer):
+    question = QuestionSerializer()
+    class Meta:
+        model = Problem
+        fields = ('id','question', )
+
+class SolutionSerializer(serializers.ModelSerializer):
+    answer = AnswerSerializer()
+    class Meta:
+        model = Solution
+        fields = ('id','answer', )
+
+class ChallengeSerializer(serializers.ModelSerializer):
+    problem = ProblemSerializer()
+    solution = SolutionSerializer()
+    class Meta:
+        model = Challenge
+        fields = ('id','problem', 'solution')
 
