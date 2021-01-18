@@ -21,6 +21,21 @@ class ChallengeViewSet(viewsets.ModelViewSet):
     filterset_fields = ['game']
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated]) 
+    def solved(self, request):
+        player = request.user.profile.player
+        achievement = Achievement.objects.filter(player=player)
+        queryset = [ a.challenge for a in achievement]
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+
+
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated]) 
     def unsolved(self, request):
         player = request.user.profile.player
         games = player.game_set.all()
@@ -29,7 +44,7 @@ class ChallengeViewSet(viewsets.ModelViewSet):
             _challenges = game.challenges.all()
             challenges += _challenges
         achievement = Achievement.objects.filter(player=player)
-        completed_challenges = set([ a.challenges for a in achievement])
+        completed_challenges = set([ a.challenge for a in achievement])
         challenges = set(challenges)
         queryset = list(challenges - completed_challenges)
 
@@ -38,7 +53,7 @@ class ChallengeViewSet(viewsets.ModelViewSet):
             serializer = self.get_serializer(page, many=True)
             return self.get_paginated_response(serializer.data)
 
-        serializer = self.get_serializer(recent_users, many=True)
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
 

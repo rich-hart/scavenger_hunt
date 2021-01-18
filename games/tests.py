@@ -48,6 +48,17 @@ class GameTest(APITestCase):
         response = self.client.get(url, format='json')
         self.assertTrue(response.data['count']) 
 
+    def test_challenge_solved_view(self):
+        self.test_challenge_model()
+        self.challenge.game.players.add(self.user.profile.player)
+        self.challenge.save()
+        Achievement.objects.create(player=self.user.profile.player, challenge=self.challenge)
+        url = reverse('challenge-solved')
+        self.client.force_login(self.user)
+        response = self.client.get(url, format='json')
+        self.assertTrue(response.data['count'])
+
+
     def test_challenge_unsolved_view(self):
         self.test_challenge_model()
         self.challenge.game.players.add(self.user.profile.player)
