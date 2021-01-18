@@ -31,3 +31,14 @@ class ChallengeSerializer(serializers.ModelSerializer):
         model = Challenge
         fields = ('id','problem', 'solution')
 
+class HiddenChallengeSerializer(serializers.ModelSerializer):
+    problem = ProblemSerializer()
+    class Meta:
+        model = Challenge
+        fields = ('id','problem')
+
+class SolveSerializer(serializers.ModelSerializer):
+    answer = serializers.CharField()
+    class Meta:
+        model = Solution
+        fields = ('id','answer')

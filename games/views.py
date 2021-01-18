@@ -16,9 +16,22 @@ class IsStaff(permissions.BasePermission):
 class ChallengeViewSet(viewsets.ModelViewSet):
     queryset = Challenge.objects.all()
     serializer_class = ChallengeSerializer
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+#    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     permission_classes = [ IsStaff | IsAdminUser ]
     filterset_fields = ['game']
+
+    @action(
+        detail=True,
+        serializer_class=SolveSerializer,
+        methods=['post','get'],
+        permission_classes=[IsAuthenticated],
+    ) 
+    def solve(self, request):
+        response = Response({'msg': ''})
+        if self.request.method == 'GET':
+            response = Response({'msg': 'post answer'})
+        return response
+
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated]) 
     def solved(self, request):
@@ -35,7 +48,12 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
 
-    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated]) 
+    @action(
+        detail=False,
+        methods=['get'],
+        serializer_class=HiddenChallengeSerializer,
+        permission_classes=[IsAuthenticated],
+    ) 
     def unsolved(self, request):
         player = request.user.profile.player
         games = player.game_set.all()
@@ -58,4 +76,4 @@ class ChallengeViewSet(viewsets.ModelViewSet):
 
 
 
-           
+          
