@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.decorators import action
@@ -5,8 +6,13 @@ from rest_framework.permissions import IsAdminUser,IsAuthenticated
 from django.contrib.auth.models import AnonymousUser
 from rest_framework import permissions
 from rest_framework.response import Response
+from fuzzywuzzy import fuzz
 import django_filters
 from .serializers import *
+
+
+ANSWER_THRESHOLD = 95
+PENALTY_TIMER = 5 * 60
 
 class IsStaff(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -16,7 +22,6 @@ class IsStaff(permissions.BasePermission):
 class ChallengeViewSet(viewsets.ModelViewSet):
     queryset = Challenge.objects.all()
     serializer_class = ChallengeSerializer
-#    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
     permission_classes = [ IsStaff | IsAdminUser ]
     filterset_fields = ['game']
 
@@ -26,10 +31,58 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         methods=['post','get'],
         permission_classes=[IsAuthenticated],
     ) 
-    def solve(self, request):
-        response = Response({'msg': ''})
+    def solve(self, request,pk):
+#        import ipdb; ipdb.set_trace()
+        data = dict()
+        challenge = self.get_object()
+        player = request.user.profile.player
+        achievement = Achievement.objects.filter(player=player, challenge=challenge).first()
+        penalty = Penalty.objects.filter(
+            game=challenge.game,
+            player=player
+        ).first()
+        now = datetime.now()
+        if achievement:
+            data['msg']='Solved'
+            response = Response(data)
+            return response
+
+        if not penalty:
+            pass
+        elif penalty.type=='red' and (now-penalty.created).seconds < PENALTY_TIMER:
+            data['msg']='RED ALERT'
+            data['penalty']='red'
+            response = Response(data)
+            return response
+
+#        if penalties.filter(type='red'):
+#            data['msg']=''
         if self.request.method == 'GET':
-            response = Response({'msg': 'post answer'})
+            data['msg']='post answer'
+            response = Response(data)
+            return response
+        player_answer = str(self.request.data['answer']).lower()
+        answer = challenge.solution.answer.text.lower()
+        if fuzz.ratio(player_answer,answer) > ANSWER_THRESHOLD:
+            data['msg'] = 'Correct'
+            Achievement.objects.create(player=player, challenge=challenge)
+        else:
+            data['msg'] = 'Incorrect'
+            if not penalty:
+                penalty_type = 'general'
+                Penalty.objects.create(
+                    game=challenge.game,
+                    player=player,
+                    type=penalty_type,
+                )
+            elif penalty.type=='general':
+                penalty.type='yellow'
+                penalty.save()
+            elif penalty_type=='yellow':
+                penalty.type='red'
+                penalty.save()
+            data['penalty']=penalty_type
+        response = Response(data)
         return response
 
 

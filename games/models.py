@@ -126,14 +126,6 @@ class Award(Base):
         ordering = ['-created']
 
 class Penalty(Base):
-    player = models.ForeignKey(
-        Player,
-        on_delete=models.CASCADE,
-        null=True,
-    )
-    game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
-
-class PenaltyTag(Base):
     class Type(Enum):
         yellow = 'yellow'
         red = 'red'
@@ -142,18 +134,27 @@ class PenaltyTag(Base):
         def get_choices(cls):
             return [ (name,value) for (name,value) in enumerate(cls) ]
 
-    instance = models.ForeignKey(
-        Penalty,
+    player = models.ForeignKey(
+        Player,
         on_delete=models.CASCADE,
-        related_name="tags",
-        related_query_name="tag",
+        null=True,
     )
-    name = models.CharField(
+    game = models.ForeignKey(Game, on_delete=models.CASCADE, null=True)
+    type = models.CharField(
         max_length=127,
         default = Type.general.value,
         choices=Type.get_choices(),
     )
     description = models.TextField()
-    class Meta:
-        ordering = ['-created']
+
+#class PenaltyTag(Base):
+#
+#    instance = models.ForeignKey(
+#        Penalty,
+#        on_delete=models.CASCADE,
+#        related_name="tags",
+#        related_query_name="tag",
+#    )
+#    class Meta:
+#        ordering = ['-created']
 

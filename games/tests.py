@@ -29,7 +29,7 @@ class GameTest(APITestCase):
         self.test_model()
         question = Question.objects.create(text='True')
         answer = Answer.objects.create(text='True')
-        self.challenge = Challenge(
+        self.challenge = Challenge.objects.create(
             problem=question,
             solution=answer,
             game=self.game,
@@ -68,4 +68,14 @@ class GameTest(APITestCase):
         response = self.client.get(url, format='json')
         self.assertTrue(response.data['count'])
 
-
+    def test_challenge_solve_view(self):
+        self.test_challenge_model()
+        self.challenge.game.players.add(self.user.profile.player)
+        self.challenge.save()
+        url =reverse('challenge-solve',kwargs={'pk':self.challenge.pk})
+        self.client.force_login(self.user)
+        response = self.client.get(url, format='json')
+        self.assertTrue(response.data['msg'])
+        data = {'answer': 'True'}
+        response = self.client.post(url, data=data, format='json')
+        self.assertEqual(response.data['msg'],'Correct')
