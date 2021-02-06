@@ -9,6 +9,9 @@ from rest_framework.test import force_authenticate
 from .views import *
 
 class PlayerTest(TestCase):
+
+    def tearDown(self):
+        User.objects.all().delete()
     def test_model(self):
         user = User.objects.create()
         self.assertTrue(user.profile.player)
@@ -16,7 +19,11 @@ class PlayerTest(TestCase):
 class GameTest(APITestCase):
     def tearDown(self):
         User.objects.all().delete()
-
+        Game.objects.all().delete()
+        Challenge.objects.all().delete()
+        Reward.objects.all().delete()
+        Achievement.objects.all().delete()
+        Award.objects.all().delete() 
     def test_model(self):
         self.user = User.objects.create()
         self.game = Game.objects.create()
@@ -34,6 +41,46 @@ class GameTest(APITestCase):
             solution=answer,
             game=self.game,
         )
+
+    def test_achievement_signal(self):
+        import ipdb; ipdb.set_trace()
+        self.test_challenge_model()
+        Reward.objects.create(
+            unique=True,
+            challenge=self.challenge,    
+        )
+        Achievement.objects.create(
+                player=self.user.profile.player,
+                challenge=self.challenge,
+        )
+
+
+
+
+
+    def test_challenge_post(self):
+        user = User.objects.create(is_superuser=True,is_staff=True)
+        game = Game.objects.create()        
+        url = reverse('challenge-list')
+        self.client.force_login(user)
+        data = {
+            "problem": {
+                "question": {
+                    "text": "True",
+                    "video": None,
+                    "picture": None
+                }
+            },
+            "solution": {
+                "answer": {
+                    "text": "True"
+                }
+            },
+            "game": game.pk,
+        }
+        response = self.client.post(url, data=data, format='json')
+        self.assertEqual(response.status_code,201)
+
 
     def test_challenge_list_view(self):
         self.test_challenge_model()

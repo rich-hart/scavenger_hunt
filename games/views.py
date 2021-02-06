@@ -19,6 +19,38 @@ class IsStaff(permissions.BasePermission):
         user = request.user
         return user.is_staff and not isinstance(user, AnonymousUser)
 
+class GameViewSet(viewsets.ModelViewSet):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
+    permission_classes = [ IsStaff | IsAdminUser ]
+
+
+class AchievementViewSet(viewsets.ModelViewSet):
+    queryset = Achievement.objects.all()
+    serializer_class = AchievementSerializer
+    permission_classes=[IsAuthenticated]
+    def get_queryset(self):
+        player = self.request.user.profile.player
+        achievements = Achievement.objects.filter(player=player)
+        return achievements
+
+class RewardViewSet(viewsets.ModelViewSet):
+    queryset = Reward.objects.all()
+    serializer_class = RewardSerializer
+    permission_classes=[IsStaff | IsAdminUser]
+
+
+
+class AwardViewSet(viewsets.ModelViewSet):
+    serializer_class = AwardSerializer
+    methods=['get']
+    permission_classes=[IsAuthenticated]
+
+    def get_queryset(self):
+        player = self.request.user.profile.player
+        awards = Award.objects.filter(player=player)
+        return awards
+ 
 class ChallengeViewSet(viewsets.ModelViewSet):
     queryset = Challenge.objects.all()
     serializer_class = ChallengeSerializer
@@ -36,7 +68,10 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         data = dict()
         challenge = self.get_object()
         player = request.user.profile.player
-        achievement = Achievement.objects.filter(player=player, challenge=challenge).first()
+        achievement = Achievement.objects.filter(
+            player=player,
+            challenge=challenge,
+        ).first()
         penalty = Penalty.objects.filter(
             game=challenge.game,
             player=player
@@ -46,6 +81,7 @@ class ChallengeViewSet(viewsets.ModelViewSet):
             data['msg']='Solved'
             response = Response(data)
             return response
+
 
         if not penalty:
             pass
@@ -65,7 +101,10 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         answer = challenge.solution.answer.text.lower()
         if fuzz.ratio(player_answer,answer) > ANSWER_THRESHOLD:
             data['msg'] = 'Correct'
-            Achievement.objects.create(player=player, challenge=challenge)
+            Achievement.objects.create(
+                player=player,
+                challenge=challenge,
+            )
         else:
             data['msg'] = 'Incorrect'
             if not penalty:

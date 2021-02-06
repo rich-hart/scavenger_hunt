@@ -24,7 +24,11 @@ from games.views import *
 router = routers.DefaultRouter()
 router.register(r'profile', ProfileViewSet, basename='profile')
 router.register(r'users', UserViewSet)
+router.register(r'games', GameViewSet)
 router.register(r'challenges', ChallengeViewSet, basename='challenge')
+router.register(r'awards', AwardViewSet, basename='award')
+router.register(r'rewards', RewardViewSet)
+router.register(r'achievements', AchievementViewSet, basename='achievement') 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),

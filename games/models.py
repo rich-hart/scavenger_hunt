@@ -72,11 +72,11 @@ class Achievement(Base):
         Challenge,
         on_delete=models.DO_NOTHING,
     )
-#    verified = models.DateTimeField(
-#        default=None,
-#        null=True,
-#        blank=True,
-#    )
+    verified = models.DateTimeField(
+        default=None,
+        null=True,
+        blank=True,
+    )
 
 
 class Reward(Base):
