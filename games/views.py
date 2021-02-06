@@ -1,3 +1,4 @@
+import re
 from datetime import datetime, timezone
 from django.shortcuts import render
 from rest_framework import viewsets
@@ -25,7 +26,7 @@ class GameViewSet(viewsets.ModelViewSet):
     permission_classes = [ IsStaff | IsAdminUser ]
 
 
-class AchievementViewSet(viewsets.ModelViewSet):
+class AchievementViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Achievement.objects.all()
     serializer_class = AchievementSerializer
     permission_classes=[IsAuthenticated]
@@ -43,9 +44,8 @@ class RewardViewSet(viewsets.ModelViewSet):
 
 class AwardViewSet(viewsets.ModelViewSet):
     serializer_class = AwardSerializer
-    methods=['get']
     permission_classes=[IsAuthenticated]
-
+    http_method_names = ['get', 'head','put']
     def get_queryset(self):
         player = self.request.user.profile.player
         awards = Award.objects.filter(player=player)
@@ -98,7 +98,9 @@ class ChallengeViewSet(viewsets.ModelViewSet):
             response = Response(data)
             return response
         player_answer = str(self.request.data['answer']).lower()
+        player_answer = ''.join(re.findall(r'[a-z]', player_answer))
         answer = challenge.solution.answer.text.lower()
+        answer = ''.join(re.findall(r'[a-z]', answer))       
         if fuzz.ratio(player_answer,answer) > ANSWER_THRESHOLD:
             data['msg'] = 'Correct'
             Achievement.objects.create(

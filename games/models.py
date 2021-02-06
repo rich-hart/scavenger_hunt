@@ -72,11 +72,7 @@ class Achievement(Base):
         Challenge,
         on_delete=models.DO_NOTHING,
     )
-    verified = models.DateTimeField(
-        default=None,
-        null=True,
-        blank=True,
-    )
+
 
 
 class Reward(Base):
@@ -121,6 +117,11 @@ class Award(Base):
     reward = models.ForeignKey(
         Reward,
         on_delete=models.DO_NOTHING,
+    )
+    verified = models.BooleanField(
+        default=None,
+        null=True,
+        blank=True,
     )
     class Meta:
         ordering = ['-created']

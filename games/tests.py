@@ -27,9 +27,6 @@ class GameTest(APITestCase):
     def test_model(self):
         self.user = User.objects.create()
         self.game = Game.objects.create()
-        self.assertFalse(self.game.players.all())
-        self.game.players.add(self.user.profile.player)
-        self.game.save()
         self.assertTrue(self.game.players.all())
 
     def test_challenge_model(self):
@@ -43,7 +40,6 @@ class GameTest(APITestCase):
         )
 
     def test_achievement_signal(self):
-        import ipdb; ipdb.set_trace()
         self.test_challenge_model()
         Reward.objects.create(
             unique=True,

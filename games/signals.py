@@ -6,7 +6,14 @@ from .models import *
 
 def create_player(sender, instance, created, **kwargs):
     if created:
-        Player.objects.create(profile=instance)
+        player = Player.objects.create(profile=instance)
+        for game in Game.objects.all():
+            game.players.add(player)
+
+def add_players(sender, instance, created, **kwargs):
+    if created:
+        for player in Player.objects.all():
+            instance.players.add(player)
 
 def reward_player(sender, instance, created, **kwargs):
     if created:

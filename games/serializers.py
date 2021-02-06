@@ -19,7 +19,7 @@ class AwardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Award
         fields = '__all__'
-
+        read_only_fields = ('id', 'player', 'reward')
 class RewardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reward
@@ -71,7 +71,7 @@ class ChallengeSerializer(serializers.ModelSerializer):
         return challenge
     class Meta:
         model = Challenge
-        fields = ('id','problem', 'solution','game')
+        fields = ('id','problem', 'solution','game','index')
 
 class HiddenChallengeSerializer(serializers.ModelSerializer):
     problem = ProblemSerializer()

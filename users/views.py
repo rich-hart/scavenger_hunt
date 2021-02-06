@@ -9,7 +9,7 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [IsAdminUser]
 
-class ProfileViewSet(viewsets.ModelViewSet):
+class ProfileViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProfileSerializer
     def get_queryset(self):
         user = self.request.user
