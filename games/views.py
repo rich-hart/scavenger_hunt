@@ -1,3 +1,4 @@
+import math
 import re
 from datetime import datetime, timezone
 from django.shortcuts import render
@@ -9,11 +10,11 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from fuzzywuzzy import fuzz
 import django_filters
+from django.conf import settings
 from .serializers import *
 
 
-ANSWER_THRESHOLD = 95
-PENALTY_TIMER = 5 * 60
+
 
 class IsStaff(permissions.BasePermission):
     def has_permission(self, request, view):
@@ -26,8 +27,16 @@ class GameViewSet(viewsets.ModelViewSet):
     permission_classes = [ IsStaff | IsAdminUser ]
 
 
+class PenaltyViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = PenaltySerializer
+    permission_classes=[IsAuthenticated]
+    http_method_names = ['get', 'head']
+    def get_queryset(self):
+        player = self.request.user.profile.player
+        penalties = Penalty.objects.filter(player=player)
+        return penalties
+
 class AchievementViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Achievement.objects.all()
     serializer_class = AchievementSerializer
     permission_classes=[IsAuthenticated]
     def get_queryset(self):
@@ -64,7 +73,6 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         permission_classes=[IsAuthenticated],
     ) 
     def solve(self, request,pk):
-#        import ipdb; ipdb.set_trace()
         data = dict()
         challenge = self.get_object()
         player = request.user.profile.player
@@ -76,21 +84,29 @@ class ChallengeViewSet(viewsets.ModelViewSet):
             game=challenge.game,
             player=player
         ).first()
-        now = datetime.now()
+        now = datetime.now(timezone.utc)
         if achievement:
             data['msg']='Solved'
+            data['state'] = 'solved'
             response = Response(data)
             return response
 
 
         if not penalty:
             pass
-        elif penalty.type=='red' and (now-penalty.created).seconds < PENALTY_TIMER:
-            data['msg']='RED ALERT'
+        elif penalty.type=='red' and (now-penalty.created).seconds < settings.PENALTY_TIMER:
+            timer = (now-penalty.created)
+            time_remaining = settings.PENALTY_TIMER - timer.seconds
+            minutes = math.floor(time_remaining / 60)
+            seconds = time_remaining - minutes * 60 
+            data['msg']=f'RED ALERT ({minutes}:{seconds:02} remaining)'
             data['penalty']='red'
+            data['state'] = 'penalty'
             response = Response(data)
             return response
-
+        elif penalty.type=='red' and (now-penalty.created).seconds > settings.PENALTY_TIMER:
+            penalty.delete()
+            penalty = None
 #        if penalties.filter(type='red'):
 #            data['msg']=''
         if self.request.method == 'GET':
@@ -101,8 +117,9 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         player_answer = ''.join(re.findall(r'[a-z]', player_answer))
         answer = challenge.solution.answer.text.lower()
         answer = ''.join(re.findall(r'[a-z]', answer))       
-        if fuzz.ratio(player_answer,answer) > ANSWER_THRESHOLD:
+        if fuzz.ratio(player_answer,answer) > settings.ANSWER_THRESHOLD:
             data['msg'] = 'Correct'
+            data['state'] = 'solved'
             Achievement.objects.create(
                 player=player,
                 challenge=challenge,
@@ -110,19 +127,19 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         else:
             data['msg'] = 'Incorrect'
             if not penalty:
-                penalty_type = 'general'
-                Penalty.objects.create(
+                penalty = Penalty.objects.create(
                     game=challenge.game,
                     player=player,
-                    type=penalty_type,
+                    type='general',
                 )
             elif penalty.type=='general':
                 penalty.type='yellow'
                 penalty.save()
-            elif penalty_type=='yellow':
+            elif penalty.type=='yellow':
                 penalty.type='red'
                 penalty.save()
-            data['penalty']=penalty_type
+            data['penalty']=penalty.type
+            data['state'] = 'penalty'
         response = Response(data)
         return response
 

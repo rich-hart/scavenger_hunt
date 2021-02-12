@@ -3,6 +3,12 @@ from rest_framework.validators import UniqueValidator
 from .models import *
 
 
+
+class PenaltySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Penalty
+        fields = '__all__'
+
 class AchievementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Achievement

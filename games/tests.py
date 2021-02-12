@@ -9,7 +9,8 @@ from rest_framework.test import force_authenticate
 from .views import *
 
 class PlayerTest(TestCase):
-
+    def setUp(self):
+        user = User.objects.create(username='test')
     def tearDown(self):
         User.objects.all().delete()
     def test_model(self):

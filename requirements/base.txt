@@ -5,3 +5,8 @@ python-Levenshtein
 django-filter
 django-storages
 boto3
+celery
+pika
+django-celery-results
+django-celery-beat
+

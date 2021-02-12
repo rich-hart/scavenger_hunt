@@ -19,6 +19,8 @@ from django.urls import path, include
 from rest_framework import routers
 from rest_framework.decorators import api_view
 from django.shortcuts import redirect
+from django.contrib.auth import logout
+
 
 from users.views import *
 from games.views import *
@@ -31,15 +33,21 @@ router.register(r'challenges', ChallengeViewSet, basename='challenge')
 router.register(r'awards', AwardViewSet, basename='award')
 router.register(r'rewards', RewardViewSet)
 router.register(r'achievements', AchievementViewSet, basename='achievement')
+router.register(r'penalties', PenaltyViewSet, basename='penalty')
 
 @api_view(['GET'])
 def home(request):
     return redirect('api-root')
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
+#    path('', home),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('api/', include(router.urls)),
+#    path('api/logout/', logout_view),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('', include('social_django.urls', namespace='social')),
 
 ]

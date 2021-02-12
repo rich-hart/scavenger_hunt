@@ -1,6 +1,7 @@
 import random
 from django.db.models import signals
 from django.contrib.auth.models import User
+from django_celery_beat.models import PeriodicTask, IntervalSchedule
 
 from .models import *
 
@@ -29,4 +30,14 @@ def reward_player(sender, instance, created, **kwargs):
                    Award.objects.create(player=instance.player, reward=reward)
  
  
-
+# executes every 10 seconds.
+def remove_penalty_schedule(sender, **kwargs):
+    schedule, created = IntervalSchedule.objects.get_or_create(
+        every=10,
+        period=IntervalSchedule.SECONDS,
+    )
+    PeriodicTask.objects.get_or_create(
+        interval=schedule,                  # we created this above.
+        name='Removing penalties',          # simply describes this periodic task.
+        task='games.tasks.remove_penalty',  # name of task.
+    )
