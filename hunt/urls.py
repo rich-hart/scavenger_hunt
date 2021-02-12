@@ -48,6 +48,6 @@ urlpatterns = [
     path('api/', include(router.urls)),
 #    path('api/logout/', logout_view),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    path('', include('social_django.urls', namespace='social')),
+    path('api/', include('social_django.urls', namespace='social')),
 
 ]

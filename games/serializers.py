@@ -12,7 +12,7 @@ class PenaltySerializer(serializers.ModelSerializer):
 class AchievementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Achievement
-        fields = '__all__'
+        fields = '__all__' 
 
 
 class GameSerializer(serializers.ModelSerializer):
@@ -24,8 +24,9 @@ class GameSerializer(serializers.ModelSerializer):
 class AwardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Award
-        fields = '__all__'
-        read_only_fields = ('id', 'player', 'reward')
+        fields = ('id','verified','reward')
+        depth = 2
+
 class RewardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Reward
