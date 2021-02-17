@@ -50,6 +50,7 @@ INSTALLED_APPS = [
 ]
 
 AUTHENTICATION_BACKENDS = (
+    'social_core.backends.eventbrite.EventbriteOAuth2',
     'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 )
@@ -230,6 +231,9 @@ SOCIAL_AUTH_PIPELINE = (
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'fields': 'id, name, email',
 }
+
+SOCIAL_AUTH_EVENTBRITE_KEY = ''
+SOCIAL_AUTH_EVENTBRITE_SECRET = ''
 
 try:
     from .local import *
