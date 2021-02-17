@@ -5,8 +5,10 @@ python-Levenshtein
 django-filter
 django-storages
 boto3
-celery
+celery<=4.4
 pika
 django-celery-results
 django-celery-beat
-
+flower
+psycopg2-binary
+gunicorn
