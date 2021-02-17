@@ -1,6 +1,7 @@
 import math
 import re
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
+from django.conf import settings
 from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework.decorators import action
@@ -10,7 +11,7 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from fuzzywuzzy import fuzz
 import django_filters
-from django.conf import settings
+
 from .serializers import *
 
 
@@ -76,43 +77,39 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         data = dict()
         challenge = self.get_object()
         player = request.user.profile.player
+        now = datetime.now(timezone.utc)
+
         achievement = Achievement.objects.filter(
             player=player,
             challenge=challenge,
         ).first()
-        penalty = Penalty.objects.filter(
+        
+        penalties = Penalty.objects.filter(
+            created__gte = (now - timedelta(seconds=settings.PENALTY_TIMER)),
             game=challenge.game,
-            player=player
-        ).first()
-        now = datetime.now(timezone.utc)
+            player=player,
+        )        
+
         if achievement:
             data['msg']='Solved'
             data['state'] = 'solved'
             response = Response(data)
-            return response
+            return response 
 
-
-        if not penalty:
+        if not penalties:
             pass
-        elif penalty.type=='red' and (now-penalty.created).seconds < settings.PENALTY_TIMER:
-            timer = (now-penalty.created)
-            time_remaining = settings.PENALTY_TIMER - timer.seconds
-            minutes = math.floor(time_remaining / 60)
-            seconds = time_remaining - minutes * 60 
-            data['msg']=f'RED ALERT ({minutes}:{seconds:02} remaining)'
+        elif penalties.filter(type='red'):
+            data['msg']=f'RED ALERT'
             data['penalty']='red'
             data['state'] = 'penalty'
             response = Response(data)
             return response
-        elif penalty.type=='red' and (now-penalty.created).seconds > settings.PENALTY_TIMER:
-            penalty.delete()
-            penalty = None
-#        if penalties.filter(type='red'):
-#            data['msg']=''
+
         if self.request.method == 'GET':
             data['msg']='post answer'
             response = Response(data)
             return response
+
         player_answer = str(self.request.data['answer']).lower()
         player_answer = ''.join(re.findall(r'[a-z]', player_answer))
         answer = challenge.solution.answer.text.lower()
@@ -126,18 +123,25 @@ class ChallengeViewSet(viewsets.ModelViewSet):
             )
         else:
             data['msg'] = 'Incorrect'
-            if not penalty:
+            if not penalties:
                 penalty = Penalty.objects.create(
                     game=challenge.game,
                     player=player,
                     type='general',
                 )
-            elif penalty.type=='general':
-                penalty.type='yellow'
-                penalty.save()
-            elif penalty.type=='yellow':
-                penalty.type='red'
-                penalty.save()
+            elif penalties.filter(type='yellow'):
+                penalty = Penalty.objects.create(
+                    game=challenge.game,
+                    player=player,
+                    type='red',
+                )
+            elif penalties.filter(type='general'):
+                penalty = Penalty.objects.create(
+                    game=challenge.game,
+                    player=player,
+                    type='yellow',
+                )
+
             data['penalty']=penalty.type
             data['state'] = 'penalty'
         response = Response(data)

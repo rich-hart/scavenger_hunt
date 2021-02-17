@@ -1,3 +1,4 @@
+from datetime import datetime, timezone, timedelta
 from rest_framework import routers, serializers, viewsets
 from rest_framework.validators import UniqueValidator
 from .models import *
@@ -5,9 +6,18 @@ from .models import *
 
 
 class PenaltySerializer(serializers.ModelSerializer):
+    expires = serializers.DateTimeField()
+    now = serializers.DateTimeField()
+    def to_representation(self, instance):
+        instance.now = datetime.now(timezone.utc)
+        instance.expires = instance.created + timedelta(seconds=instance.duration)
+        data = super(PenaltySerializer, self).to_representation(instance)
+        return data
+ 
     class Meta:
         model = Penalty
         fields = '__all__'
+#        fields = ('id','expires','now')
 
 class AchievementSerializer(serializers.ModelSerializer):
     class Meta:

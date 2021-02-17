@@ -8,11 +8,11 @@ class GamesConfig(AppConfig):
             create_player,
             reward_player,
             add_players,
-            remove_penalty_schedule,
+#            remove_penalty_schedule,
         )
         from users.models import Profile
         from games.models import Achievement, Game
         post_save.connect(receiver=create_player, sender=Profile)
         post_save.connect(receiver=reward_player, sender=Achievement)
         post_save.connect(receiver=add_players, sender=Game)
-        post_migrate.connect(receiver=remove_penalty_schedule, sender=self)
+#        post_migrate.connect(receiver=remove_penalty_schedule, sender=self)

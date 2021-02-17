@@ -1,8 +1,10 @@
 from enum import Enum
+from django.conf import settings
 from django.db import models
 from users.models import Profile
 from hunt.models import Base
 from hunt.storage_backends import MediaStorage, StaticStorage
+
 
 class Player(Base):
     profile = models.OneToOneField(
@@ -147,7 +149,7 @@ class Penalty(Base):
         choices=Type.get_choices(),
     )
     description = models.TextField()
-
+    duration = models.IntegerField(default=settings.PENALTY_TIMER)
 #class PenaltyTag(Base):
 #
 #    instance = models.ForeignKey(
