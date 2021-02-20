@@ -31,13 +31,13 @@ def reward_player(sender, instance, created, **kwargs):
  
  
 # executes every 10 seconds.
-#def remove_penalty_schedule(sender, **kwargs):
-#    schedule, created = IntervalSchedule.objects.get_or_create(
-#        every=10,
-#        period=IntervalSchedule.SECONDS,
-#    )
-#    PeriodicTask.objects.get_or_create(
-#        interval=schedule,                  # we created this above.
-#        name='Removing penalties',          # simply describes this periodic task.
-#        task='games.tasks.remove_penalty',  # name of task.
-#    )
+def remove_penalty_schedule(sender, **kwargs):
+    schedule, created = IntervalSchedule.objects.get_or_create(
+        every=10,
+        period=IntervalSchedule.SECONDS,
+    )
+    PeriodicTask.objects.get_or_create(
+        interval=schedule,                  # we created this above.
+        name='Removing penalties',          # simply describes this periodic task.
+        task='games.tasks.remove_penalty',  # name of task.
+    )

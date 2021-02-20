@@ -212,6 +212,29 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
+    @action(
+        detail=False,
+        methods=['get'],
+        permission_classes=[IsAuthenticated],
+    ) 
+    def player(self, request):
+        player = request.user.profile.player
+        games = player.game_set.all()
+        challenges = []
+        for game in games:
+            challenges += game.challenges.all() 
+        achievements = Achievement.objects.filter(player=player)
+        completed_challenges = set([ a.challenge for a in achievements])
+        queryset = []
+        for challenge in challenges:
+            if challenge not in completed_challenges:
+                challenge.solution = None
+            queryset.append(challenge)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
 
-
-          
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
+         
