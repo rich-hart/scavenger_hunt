@@ -37,6 +37,25 @@ class PenaltyViewSet(viewsets.ReadOnlyModelViewSet):
         penalties = Penalty.objects.filter(player=player)
         return penalties
 
+    @action(
+        detail=False,
+        methods=['get'],
+        permission_classes=[IsAuthenticated],
+    ) 
+    def current(self, request):
+        data = dict()
+        player = request.user.profile.player
+        now = datetime.now(timezone.utc)
+        penalty = Penalty.objects.filter(
+            created__gte = (now - timedelta(seconds=settings.PENALTY_TIMER)),
+#            game=challenge.game,
+            player=player,
+        ).order_by('-created').first() 
+        if penalty:
+            data = self.serializer_class(penalty).data
+        response = Response(data)
+        return response 
+
 class AchievementViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AchievementSerializer
     permission_classes=[IsAuthenticated]
