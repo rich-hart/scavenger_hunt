@@ -167,7 +167,11 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         return response
 
 
-    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated]) 
+    @action(
+        detail=False,
+        methods=['get'],
+        permission_classes=[IsAuthenticated],
+    ) 
     def solved(self, request):
         player = request.user.profile.player
         achievement = Achievement.objects.filter(player=player)
