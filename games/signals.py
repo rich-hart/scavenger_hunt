@@ -23,8 +23,15 @@ def reward_player(sender, instance, created, **kwargs):
             awards = Award.objects.filter(reward=reward)
             if awards and reward.unique:
                 continue
-            award = Award.objects.filter(reward=reward,player=instance.player).first()
-            if not award:
+            awards = Award.objects.filter(
+                reward=reward,
+                player=instance.player,
+            )
+            if len(awards)>1:
+                #FIXME: why are duplicated being created?
+                for i in range(1,len(awards)):
+                    awards[i].delete()
+            elif not awards:
                 event = random.random()
                 if reward.rate > event:
                    Award.objects.create(player=instance.player, reward=reward)

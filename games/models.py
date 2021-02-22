@@ -72,7 +72,7 @@ class Achievement(Base):
     )
     challenge = models.ForeignKey(
         Challenge,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
     )
 
 
@@ -94,7 +94,7 @@ class Reward(Base):
 
     challenge = models.ForeignKey(
         Challenge,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
     )
     category = models.CharField(
         max_length=127,
@@ -104,6 +104,12 @@ class Reward(Base):
     description = models.TextField()
     unique = models.BooleanField(default=True)
     rate = models.FloatField(default=1.0)
+    picture = models.FileField(
+        storage=MediaStorage(),
+        default=None,
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         ordering = ['-created']
@@ -114,11 +120,11 @@ class Reward(Base):
 class Award(Base):
     player = models.ForeignKey(
         Player,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
     )
     reward = models.ForeignKey(
         Reward,
-        on_delete=models.DO_NOTHING,
+        on_delete=models.CASCADE,
     )
     verified = models.BooleanField(
         default=None,
