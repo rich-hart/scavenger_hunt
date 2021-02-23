@@ -27,14 +27,10 @@ def reward_player(sender, instance, created, **kwargs):
                 reward=reward,
                 player=instance.player,
             )
-            if len(awards)>1:
-                #FIXME: why are duplicated being created?
-                for i in range(1,len(awards)):
-                    awards[i].delete()
-            elif not awards:
+            if not awards:
                 event = random.random()
                 if reward.rate > event:
-                   Award.objects.create(player=instance.player, reward=reward)
+                   Award.objects.get_or_create(player=instance.player, reward=reward)
  
  
 # executes every 10 seconds.

@@ -136,7 +136,7 @@ class ChallengeViewSet(viewsets.ModelViewSet):
         if fuzz.ratio(player_answer,answer) > settings.ANSWER_THRESHOLD:
             data['msg'] = 'Correct'
             data['state'] = 'solved'
-            Achievement.objects.create(
+            Achievement.objects.get_or_create(
                 player=player,
                 challenge=challenge,
             )
