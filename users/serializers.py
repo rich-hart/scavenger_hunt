@@ -11,4 +11,4 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = Profile
         fields = ('id','user', 'nickname')
         read_only_fields = fields
-        depth = 2
+#        depth = 2
