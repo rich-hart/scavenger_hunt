@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+  db:
+    volumes:
+      - ./data/psql:/var/lib/postgresql/data #TODO: Make sure volume is mounted
+    ports: []
+  adminer:
+    ports: []
+  backend:
+    ports: []
+  frontend:
+    ports: []
+  flower:
+    ports: []
+  queue:
+    volumes:
+      - ./data/rabbitmq:/var/lib/rabbitmq
+    ports: []
+
