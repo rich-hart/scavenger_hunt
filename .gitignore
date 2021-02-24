@@ -1,8 +1,8 @@
 venv/
-
+data/
 .log
 *.log
-
+hunt/hunt/local.py
 __pycache__/
 */__pycache__/
 *.pyc
@@ -11,3 +11,6 @@ __pycache__/
 *.swp
 
 */local.py
+
+nginx/localhost.crt
+nginx/localhost.key
