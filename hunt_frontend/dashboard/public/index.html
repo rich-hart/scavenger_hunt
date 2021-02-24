@@ -1,0 +1,279 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <!--<meta name="viewport" content="user-scalable=yes, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Color Pattern Generator | LCARS SDK</title>
+    <!--<base href="/">-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <!--<base href="/">-->
+    <script type="text/javascript" src="lcarssdk/js/jquery.js"></script>
+    <script type="text/javascript" src="lcarssdk/js/webviewinfo.js"></script>
+    <script type="text/javascript" src="lcarssdk/js/arrive.js"></script>
+    <script type="text/javascript" src="lcarssdk/js/lcarssdk.js"></script>
+    <script type="text/javascript" src="lcarssdk/addons/scrollbutton/scrollbutton.js"></script>
+    <script type="text/javascript" src="lcarssdk/addons/levelbar/levelbar.js"></script>
+    <script type="text/javascript" src="lcarssdk/templates/bracket/bracket.js"></script>
+    <script type="text/javascript" src="lcarssdk/templates/dialog/dialog.js"></script>
+    <script type="text/javascript" src="lcarssdk/templates/framing/framing.js"></script>
+    <script type="text/javascript" src="lcarssdk/templates/button/button.js"></script>
+    <script type="text/javascript" src="particles.js"></script>
+    <script type="text/javascript" src="module.js"></script>
+    <link rel="stylesheet" type="text/css" href="lcarssdk/css/lcarssdk.css">
+    <link rel="stylesheet" type="text/css" href="lcarssdk/addons/scrollbutton/scrollbutton.css">
+    <link rel="stylesheet" type="text/css" href="lcarssdk/addons/levelbar/levelbar.css">
+    <link rel="stylesheet" type="text/css" href="lcarssdk/templates/bracket/bracket.css">
+    <link rel="stylesheet" type="text/css" href="lcarssdk/templates/dialog/dialog.css">
+    <link rel="stylesheet" type="text/css" href="lcarssdk/templates/framing/framing.css">
+    <link rel="stylesheet" type="text/css" href="lcarssdk/templates/button/button.css">
+    <link rel="stylesheet" type="text/css" href="lcarssdk/themes/theme_ussNotAffiliated.css">
+    <link rel="stylesheet" type="text/css" href="module.css">
+    <script type="text/javascript" src="animated_delta.js"></script>   
+    <link rel="stylesheet" type="text/css" href="animated_delta.css">
+    <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script type="text/javascript" src="main.js"></script>
+
+  </head>
+  <body ontouchstart="" onload="main()" style="overflow:scroll" ng-app="scavenger_hunt" ng-controller="scavenger_hunt_Ctrl">
+
+    <div id="banner">
+      <div id="banner-content"></div>
+    </div>
+
+    <div>
+      <!-- Page Container -->
+
+
+      <div class="w3-container w3-content" style="max-width:1400px;margin-top:20px;">
+        <!-- The Grid -->
+        <div class="w3-row">
+          <!-- Left Column -->
+          <br>
+          <br>
+          <div class="w3-col m3">
+            <!-- Profile -->
+            <div style="w3-card w3-black" ng-if="logged_in">
+              <a class="button pill {{colorGen()}}" data-label="LOGOUT" href="/accounts/logout/" syle="max-height:30px">
+              </a>
+            </div>
+            <br>
+            <div class="w3-card w3-black">
+              <div class="wrapper sdk bracket typeA w3-container" id="bracket_32">
+                <div class="wrapper content" id="profile_pic">
+                  <canvas class="particles-js-canvas-el"></canvas>
+                  <img src="delta.png" id="delta">
+                </div>
+                <div class="elbow top-left small {{colorGen()}} no-event horizontal" id="elbow_6">
+                  <div class="bar">
+                    <div class="block"></div>
+                  </div>
+                  <div class="bar" id="bar_7"></div>
+                </div>
+                <div class="elbow top-right small {{colorGen()}} no-event horizontal" id="elbow_8">
+                  <div class="bar">
+                    <div class="block"></div>
+                  </div>
+                  <div class="bar" id="bar_9"></div>
+                </div>
+                <div class="elbow bottom-left small {{colorGen()}} no-event horizontal" id="elbow_10">
+                  <div class="bar">
+                    <div class="block"></div>
+                  </div>
+                  <div class="bar" id="bar_11"></div>
+                </div>
+                <div class="elbow bottom-right small {{colorGen()}} no-event horizontal" id="elbow_12">
+                  <div class="bar">
+                    <div class="block"></div>
+                  </div>
+                  <div class="bar" id="bar_13"></div>
+                </div>
+                <div class="column flexv" id="column_14">
+                  <div class="bar flexcv {{colorGen()}}" id="bar_15"></div>
+                  <div class="bar flexcv {{colorGen()}}" id="bar_16">
+                    <div class="bar bg-white" id="bar_17"></div>
+                  </div>
+                  <div class="bar flexcv {{colorGen()}}" id="bar_18"></div>
+                </div>
+                <div class="column flexv" id="column_19">
+                  <div class="bar flexcv {{colorGen()}}" id="bar_20"></div>
+                  <div class="bar flexcv {{colorGen()}}" id="bar_21"></div>
+                  <div class="bar flexcv {{colorGen()}}" id="bar_22"></div>
+                </div>
+                <div class="column flexv" id="column_23">
+                  <div class="bar flexcv {{colorGen()}}" id="bar_24"></div>
+                  <div class="bar flexcv {{colorGen()}}" id="bar_25">
+                    <div class="bar bg-white" id="bar_26"></div>
+                  </div>
+                  <div class="bar flexcv {{colorGen()}}" id="bar_27"></div>
+                </div>
+                <div class="column flexv" id="column_28">
+                  <div class="bar flexcv {{colorGen()}}" id="bar_29"></div>
+                  <div class="bar flexcv {{colorGen()}}" id="bar_30"></div>
+                  <div class="bar flexcv {{colorGen()}}" id="bar_31"></div>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="w3-card w3-black" ng-if="logged_out">
+              <div class="w3-container">
+                <a href="api/login/facebook/?next=/">
+                  <div class="button pill {{colorGen()}}" data-label="LOGIN" style="text-align:right;"></div>
+                </a>
+              </div>
+            </div>
+            <!-- Accordion -->
+            <div class="w3-card w3-round" ng-if="logged_in">
+              <div class="w3-black button-wrap">
+
+                <div class="button {{colorGen()}} highlight" 
+                     onclick="myFunction('awards')" 
+                     data-label="Awards"
+                     ng-style="{ 'border' : !global_verified ? 'thick solid #0000FF' : '#000000' }"
+                     style="margin-bottom:5px;">
+                </div>
+
+                <div id="awards" class="w3-hide w3-container">
+                  <div ng-repeat="award in awards">
+                    <div ng-style="{ 'border' : !local_verified[award.reward.id] ? 'thick solid #0000FF' : '#000000' }" style="margin-bottom:5px;">
+                        <div class="bar {{colorGen()}}" 
+                             data-label="Award" 
+                             style="text-align:right;"
+                             ng-click="verifyElement('award_'+award.id.toString())">
+                        </div>
+                    </div>
+                    <div id="award_{{award.id}}" class="w3-hide w3-container">
+                        <div ng-if="award.reward.picture" style="text-align: center;">
+                            <img src="{{award.reward.picture}}" class="center">
+                        </div>
+                        <p>{{award.reward.description}}</p>
+                    </div>
+
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+            <br>
+            <!-- End Left Column -->
+          </div>
+          <!-- Middle Column -->
+          <div class="w3-col m7" ng-if="logged_in">
+            <div class="w3-row-padding">
+              <div class="w3-col m12">
+            <div class="w3-card w3-round" ng-if="logged_in">
+              <div class="w3-black button-wrap">
+                <div class="button {{colorGen()}}"  ng-click="showElement('challenges')" data-label="Challenges" style="text-align:right;margin-bottom:5px"></div>
+
+                <div id="challenges" class="w3-hide w3-container">
+                  <div ng-repeat="challenge in challenges">
+                    <div class="bar {{colorGen()}}" 
+                         data-label="Challenge {{challenge.id}} (Complete)" 
+                         style="text-align:left;margin-bottom:5px"
+                         ng-click="showElement('challenge_'+challenge.id.toString())"
+                         ng-if="challenge.solution">
+                    </div>
+                    <div id="challenge_title_{{challenge.id}}"
+                         class="bar {{colorGen()}}" 
+                         data-label="Challenge {{challenge.id}}" 
+                         style="text-align:left;margin-bottom:5px"
+                         ng-click="showElement('challenge_'+challenge.id.toString())"
+                         ng-if="!challenge.solution">
+                    </div>
+                    <div id="challenge_{{challenge.id}}" class="w3-hide w3-container">
+                      <div>
+                        <div ng-if="{{challenge.problem.question.picture}}" style="text-align: center;">
+                          <img src="{{challenge.problem.question.picture}}" class="center">
+                        </div>
+                        <div ng-if="challenge.problem.question.video" style="text-align: center;">
+                          <video width="320" height="240" class="center" controls="">
+                            <source src="{{challenge.problem.question.video}}" type="video/mp4">
+                          </video>
+                        </div>
+                        <div class="content flexcv" id="content_338">
+                          <p id="htmlTag_345" class="htmlTag text-blue-2" style="text-align: center">
+                            {{challenge.problem.question.text}}
+                          </p>
+                        </div>
+                        <div class="row" style="max-height:30px" id="row_339" ng-if="challenge.solution">
+                          <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="{{challenge.solution.answer.text}}" press-enter="submitAnswer({{challenge.id}})" disabled>
+                        </div>
+
+                        <div class="row"
+                            style="max-height:30px"
+                            id="row_339"
+                            ng-if="!challenge.solution">
+                          <input id="answer_{{challenge.id}}" type="text" name="answer" placeholder="Answer" press-enter="submitAnswer({{challenge.id}})">
+                        </div>
+
+
+                        <br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+              </div>
+            </div>
+            <!-- End Middle Column -->
+          </div>
+          <!-- Right Column -->
+          <div class="w3-col m2" ng-if="logged_in">
+            <br>
+            <div class="w3-card w3-round w3-black w3-center">
+              <div class="w3-container">
+                <p>Upcoming Events:</p>
+                <img src="GIS_facebook_logo.jpg" alt="Forest" style="width:100%;">
+                <p><strong>Virtual Celebration</strong></p>
+                <p>Saturdays 8:00PM EST</p>
+                
+                    <a target="_blank" href="https://www.facebook.com/gaaaysinspaaace/events/">
+                        <button class="w3-button w3-block w3-theme-l4">Info</button>
+                    </a>
+              </div>
+            </div>
+            <br>
+            <br>
+            <div class="w3-card w3-round w3-black w3-center">
+              <div class="w3-container">
+                <img src="the_delta_flyers_logo.jpg" alt="Forest" style="width:100%;">
+                <p><strong>New Episodes</strong></p>
+                <p>Sundays</p>
+               
+                    <a target="_blank" href="https://the-delta-flyers.captivate.fm/">
+                        <button class="w3-button w3-block w3-theme-l4">Info</button>
+                    </a>
+              </div>
+            </div>
+            <div class="w3-card w3-round w3-black w3-padding-32 w3-center">
+              <p><i class="fa fa-bug w3-xxlarge"></i></p>
+            </div>
+            <!-- End Right Column -->
+          </div>
+          <!-- End Grid -->
+        </div>
+        <!-- End Page Container -->
+      </div>
+      <br>
+    <div id="solution-banner">
+      <div id="solution-banner-content"></div>
+    </div>
+
+      <!-- Footer -->
+      <footer class="w3-container w3-theme-d3 w3-padding-16" ng-if="logged_in">
+        <h5>Gaaays In Spaaace</h5>
+      </footer>
+      <footer class="w3-container w3-theme-d5" ng-if="logged_in">
+        <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
+      </footer>
+    </div>
+
+  </body>
+</html>
