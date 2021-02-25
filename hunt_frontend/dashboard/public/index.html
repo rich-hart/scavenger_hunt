@@ -144,7 +144,7 @@
                              style="text-align:right;margin-bottom:5px;"
                              ng-click="verifyElement('award_'+award.id.toString())">
                         </div>
-                        <div id="award_{{award.id}}" class="w3-hide w3-container">
+                        <div id="award_{{award.id}}" class="w3-hide w3-container" style="word-wrap: break-word;">
                             <div ng-if="award.reward.picture" style="text-align: center;">
                                 <img ng-src="{{award.reward.picture}}" err-src="{{default_image}}" class="center">
                             </div>
@@ -167,7 +167,7 @@
               <div class="w3-black button-wrap">
                 <div ng-init='rand_color_18 = colorGen()' class="button {{rand_color_18}}"  ng-click="showElement('challenges')" data-label="Challenges" style="text-align:right;margin-bottom:5px"></div>
 
-                <div id="challenges" class="w3-hide w3-container">
+                <div id="challenges" class="w3-hide w3-container" style="word-wrap: break-word;">
                   <div ng-repeat="challenge in challenges">
                     <div ng-init='rand_color = colorGen()' class="bar {{rand_color}}" 
                          data-label="Challenge {{challenge.id}} (Complete)" 
