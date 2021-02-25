@@ -148,7 +148,7 @@
                     </div>
                     <div id="award_{{award.id}}" class="w3-hide w3-container">
                         <div ng-if="award.reward.picture" style="text-align: center;">
-                            <img src="{{award.reward.picture}}" class="center">
+                            <img ng-src="{{award.reward.picture}}" err-src="{{default_image}}" class="center">
                         </div>
                         <p>{{award.reward.description}}</p>
                     </div>
@@ -188,12 +188,12 @@
                     </div>
                     <div id="challenge_{{challenge.id}}" class="w3-hide w3-container">
                       <div>
-                        <div ng-if="{{challenge.problem.question.picture}}" style="text-align: center;">
-                          <img src="{{challenge.problem.question.picture}}" class="center">
+                        <div ng-if="challenge.problem.question.picture" style="text-align: center;">
+                          <img ng-src="{{challenge.problem.question.picture}}" err-src="{{default_image}}" class="center">
                         </div>
                         <div ng-if="challenge.problem.question.video" style="text-align: center;">
                           <video width="320" height="240" class="center" controls="">
-                            <source src="{{challenge.problem.question.video}}" type="video/mp4">
+                            <source ng-src="{{challenge.problem.question.video}}" err-src="{{default_video}}" type="video/mp4">
                           </video>
                         </div>
                         <div class="content flexcv" id="content_338">

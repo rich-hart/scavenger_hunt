@@ -32,7 +32,7 @@ function main() {
     var delta = document.createElement("img");
     var profile_pic = document.getElementById('profile_pic');
     var solution_banner = document.getElementById('solution-banner');
-
+    
     delta.setAttribute('src', 'delta.png');
 
     delta.setAttribute('id', 'delta');
@@ -90,10 +90,11 @@ app.config(function($httpProvider) {
 }).controller("scavenger_hunt_Ctrl", ['$scope','$http', function( $scope, $http) {
     //    var temp_api_root = "http://127.0.0.1:8000/api/scavenger_hunt/";
     //    var API_ROOT = temp_api_root;
-    debugger
     var solution_banner = document.getElementById('solution-banner');
     API_ROOT = '/api/'
     solution_banner.style.display = 'none';
+    $scope.default_image = 'default.png'
+    $scope.default_video = 'default.mp4'
     $scope.logged_in = false;
     $scope.logged_out = true;
     $scope.is_staff = false;
