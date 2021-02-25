@@ -139,20 +139,17 @@
 
                 <div id="awards" class="w3-hide w3-container">
                   <div ng-repeat="award in awards">
-                    <div ng-style="{ 'border' : !local_verified[award.reward.id] ? 'thick solid #0000FF' : '#000000' }" style="margin-bottom:5px;">
-                        <div ng-init='rand_color = colorGen()' class="bar {{rand_color}}" 
+                        <div ng-style="{ 'border' : !local_verified[award.reward.id] ? 'thick solid #0000FF' : '#000000' }" ng-init='rand_color = colorGen()' class="bar {{rand_color}}" 
                              data-label="Award" 
-                             style="text-align:right;"
+                             style="text-align:right;margin-bottom:5px;"
                              ng-click="verifyElement('award_'+award.id.toString())">
                         </div>
-                    </div>
-                    <div id="award_{{award.id}}" class="w3-hide w3-container">
-                        <div ng-if="award.reward.picture" style="text-align: center;">
-                            <img ng-src="{{award.reward.picture}}" err-src="{{default_image}}" class="center">
+                        <div id="award_{{award.id}}" class="w3-hide w3-container">
+                            <div ng-if="award.reward.picture" style="text-align: center;">
+                                <img ng-src="{{award.reward.picture}}" err-src="{{default_image}}" class="center">
+                            </div>
+                            <p>{{award.reward.description}}</p>
                         </div>
-                        <p>{{award.reward.description}}</p>
-                    </div>
-
                   </div>
                 </div>
 
