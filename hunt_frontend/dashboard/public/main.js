@@ -87,9 +87,10 @@ app.config(function($httpProvider) {
     $httpProvider.defaults.xsrfCookieName = 'csrftoken';
     $httpProvider.defaults.xsrfHeaderName = 'X-CSRFToken';
     //  $httpProvider.interceptors.push('testInterceptor');
-}).controller("scavenger_hunt_Ctrl", function($scope, $http) {
+}).controller("scavenger_hunt_Ctrl", ['$scope','$http', function( $scope, $http) {
     //    var temp_api_root = "http://127.0.0.1:8000/api/scavenger_hunt/";
     //    var API_ROOT = temp_api_root;
+    debugger
     var solution_banner = document.getElementById('solution-banner');
     API_ROOT = '/api/'
     solution_banner.style.display = 'none';
@@ -98,6 +99,7 @@ app.config(function($httpProvider) {
     $scope.is_staff = false;
     $scope.uiColors = uiColors;
     $scope.cookie = document.cookie.split('=')[1];
+
     $scope.colorGen = function() {
         return LCARS.colorGen($scope.uiColors)
     };
@@ -327,7 +329,7 @@ app.config(function($httpProvider) {
 
 
 
-});
+}]);
 
 // Accordion
 function myFunction(id) {
