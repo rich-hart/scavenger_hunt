@@ -58,7 +58,7 @@
           <div class="w3-col m3">
             <!-- Profile -->
             <div style="w3-card w3-black" ng-if="logged_in">
-              <a ng-init='rand_color = colorGen()' class="button pill {{rand_color}}" data-label="LOGOUT" href="/accounts/logout/" syle="max-height:30px">
+              <a ng-init='rand_color_A = colorGen()' class="button pill {{rand_color_A}}" data-label="LOGOUT" href="/accounts/logout/" syle="max-height:30px">
               </a>
             </div>
             <br>
@@ -68,53 +68,53 @@
                   <canvas class="particles-js-canvas-el"></canvas>
                   <img src="delta.png" id="delta">
                 </div>
-                <div ng-init='rand_color = colorGen()' class="elbow top-left small {{rand_color}} no-event horizontal" id="elbow_6">
+                <div ng-init='rand_color_0 = colorGen()' class="elbow top-left small {{rand_color_0}} no-event horizontal" id="elbow_6">
                   <div class="bar">
                     <div class="block"></div>
                   </div>
                   <div class="bar" id="bar_7"></div>
                 </div>
-                <div ng-init='rand_color = colorGen()' class="elbow top-right small {{rand_color}} no-event horizontal" id="elbow_8">
+                <div ng-init='rand_color_1 = colorGen()' class="elbow top-right small {{rand_color_1}} no-event horizontal" id="elbow_8">
                   <div class="bar">
                     <div class="block"></div>
                   </div>
                   <div class="bar" id="bar_9"></div>
                 </div>
-                <div ng-init='rand_color = colorGen()' class="elbow bottom-left small {{rand_color}} no-event horizontal" id="elbow_10">
+                <div ng-init='rand_color_2 = colorGen()' class="elbow bottom-left small {{rand_color_2}} no-event horizontal" id="elbow_10">
                   <div class="bar">
                     <div class="block"></div>
                   </div>
                   <div class="bar" id="bar_11"></div>
                 </div>
-                <div ng-init='rand_color = colorGen()' class="elbow bottom-right small {{rand_color}} no-event horizontal" id="elbow_12">
+                <div ng-init='rand_color_3 = colorGen()' class="elbow bottom-right small {{rand_color_3}} no-event horizontal" id="elbow_12">
                   <div class="bar">
                     <div class="block"></div>
                   </div>
                   <div class="bar" id="bar_13"></div>
                 </div>
                 <div class="column flexv" id="column_14">
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_15"></div>
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_16">
+                  <div ng-init='rand_color_4 = colorGen()' class="bar flexcv {{rand_color_4}}" id="bar_15"></div>
+                  <div ng-init='rand_color_5 = colorGen()' class="bar flexcv {{rand_color_5}}" id="bar_16">
                     <div class="bar bg-white" id="bar_17"></div>
                   </div>
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_18"></div>
+                  <div ng-init='rand_color_6 = colorGen()' class="bar flexcv {{rand_color_6}}" id="bar_18"></div>
                 </div>
                 <div class="column flexv" id="column_19">
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_20"></div>
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_21"></div>
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_22"></div>
+                  <div ng-init='rand_color_7 = colorGen()' class="bar flexcv {{rand_color_7}}" id="bar_20"></div>
+                  <div ng-init='rand_color_8 = colorGen()' class="bar flexcv {{rand_color_8}}" id="bar_21"></div>
+                  <div ng-init='rand_color_9 = colorGen()' class="bar flexcv {{rand_color_9}}" id="bar_22"></div>
                 </div>
                 <div class="column flexv" id="column_23">
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_24"></div>
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_25">
+                  <div ng-init='rand_color_10 = colorGen()' class="bar flexcv {{rand_color_10}}" id="bar_24"></div>
+                  <div ng-init='rand_color_11 = colorGen()' class="bar flexcv {{rand_color_11}}" id="bar_25">
                     <div class="bar bg-white" id="bar_26"></div>
                   </div>
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_27"></div>
+                  <div ng-init='rand_color_12 = colorGen()' class="bar flexcv {{rand_color_12}}" id="bar_27"></div>
                 </div>
                 <div class="column flexv" id="column_28">
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_29"></div>
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_30"></div>
-                  <div ng-init='rand_color = colorGen()' class="bar flexcv {{rand_color}}" id="bar_31"></div>
+                  <div ng-init='rand_color_13 = colorGen()' class="bar flexcv {{rand_color_13}}" id="bar_29"></div>
+                  <div ng-init='rand_color_14 = colorGen()' class="bar flexcv {{rand_color_14}}" id="bar_30"></div>
+                  <div ng-init='rand_color_15 = colorGen()' class="bar flexcv {{rand_color_15}}" id="bar_31"></div>
                 </div>
               </div>
             </div>
@@ -122,7 +122,7 @@
             <div class="w3-card w3-black" ng-if="logged_out">
               <div class="w3-container">
                 <a href="api/login/facebook/?next=/">
-                  <div ng-init='rand_color = colorGen()' class="button pill {{rand_color}}" data-label="LOGIN" style="text-align:right;"></div>
+                  <div ng-init='rand_color_16 = colorGen()' class="button pill {{rand_color_16}}" data-label="LOGIN" style="text-align:right;"></div>
                 </a>
               </div>
             </div>
@@ -130,7 +130,7 @@
             <div class="w3-card w3-round" ng-if="logged_in">
               <div class="w3-black button-wrap">
 
-                <div ng-init='rand_color = colorGen()' class="button {{rand_color}} highlight" 
+                <div ng-init='rand_color_17 = colorGen()' class="button {{rand_color_17}} highlight" 
                      onclick="myFunction('awards')" 
                      data-label="Awards"
                      ng-style="{ 'border' : !global_verified ? 'thick solid #0000FF' : '#000000' }"
@@ -168,7 +168,7 @@
               <div class="w3-col m12">
             <div class="w3-card w3-round" ng-if="logged_in">
               <div class="w3-black button-wrap">
-                <div ng-init='rand_color = colorGen()' class="button {{rand_color}}"  ng-click="showElement('challenges')" data-label="Challenges" style="text-align:right;margin-bottom:5px"></div>
+                <div ng-init='rand_color_18 = colorGen()' class="button {{rand_color_18}}"  ng-click="showElement('challenges')" data-label="Challenges" style="text-align:right;margin-bottom:5px"></div>
 
                 <div id="challenges" class="w3-hide w3-container">
                   <div ng-repeat="challenge in challenges">
