@@ -36,41 +36,6 @@ services:
       - 8001:8001/tcp
     depends_on:
       - backend
-  worker:
-    image: hunt:latest
-    container_name: hunt_worker
-    command: celery -A hunt worker --loglevel=info
-    env_file:
-      - base.env
-    depends_on:
-      - backend
-      - queue
-  flower:
-    image: hunt:latest
-    container_name: hunt_flower
-    command: celery flower -A hunt
-    env_file:
-      - base.env
-    depends_on:
-      - worker
-      - queue
-    ports:
-      - 5555:5555/tcp
-  scheduler:
-    image: hunt:latest
-    container_name: hunt_scheduler
-    command: celery -A hunt beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
-    env_file:
-      - base.env
-    depends_on:
-      - worker
-      - queue
-  queue:
-    container_name: rabbitmq
-    image: rabbitmq:3-management
-    ports:
-      - 8080:15672/tcp
-      - 5672:5672/tcp
   proxy:
     container_name: project_proxy
     build: nginx
@@ -81,6 +46,4 @@ services:
       - backend
       - frontend
 
-#    volumes:
-#      - /etc/ssl:/etc/ssl
-#      - /var/www:/var/www
+

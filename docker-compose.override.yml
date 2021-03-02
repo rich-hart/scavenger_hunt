@@ -11,10 +11,4 @@ services:
     ports: []
   frontend:
     ports: []
-  flower:
-    ports: []
-  queue:
-    volumes:
-      - ./data/rabbitmq:/var/lib/rabbitmq
-    ports: []
 
