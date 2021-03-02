@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - /var/lib/postgresql/data:/var/lib/postgresql/data
+    env_file:
+      - prod.env
+  adminer:
+    image: adminer
+    restart: always
+  backend:
+    image: hunt:prod
+    container_name: hunt_backend
+    build: hunt
+    env_file:
+      - prod.env
+    depends_on:
+      - db
+  frontend:
+    image: hunt_frontend:prod
+    container_name: hunt_frontend
+    build: hunt_frontend
+    env_file:
+      - prod.env
+    depends_on:
+      - backend
+  proxy:
+    container_name: project_proxy
+    build: nginx
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - backend
+      - frontend
+
+
