@@ -208,13 +208,6 @@ app.config(function($httpProvider) {
         function(data) {});
 
 
-    var reward_endpoint = API_ROOT + 'rewards/?format=json';
-
-    $http.get(reward_endpoint).then(
-        function(response) {
-            $scope.rewards = response.data.results;
-        },
-        function(data) {});
 
 
     var award_endpoint = API_ROOT + 'awards/?format=json';
