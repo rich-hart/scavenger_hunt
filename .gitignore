@@ -11,6 +11,6 @@ __pycache__/
 *.swp
 
 */local.py
-
-nginx/localhost.crt
-nginx/localhost.key
+prod.env
+nginx/thegreattribblehunt.crt
+nginx/thegreattribblehunt.key
