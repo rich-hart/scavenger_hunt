@@ -25,7 +25,7 @@ SECRET_KEY = '%s!ml%4l2g+qx=c6e7!dlrrrnvf-2yhqktw#=c62yqw%h%nwfd'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.thegreattribblehunt.org']
+ALLOWED_HOSTS = []
 
 
 # Application definition
