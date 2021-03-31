@@ -26,6 +26,9 @@ class TestProfile(APITestCase):
             email='u@d.com',
             password='password',
         )
+    def tearDown(self):
+        User.objects.all().delete()
+
     def test_signal(self):
         self.assertTrue(self.user.profile)
 
@@ -37,4 +40,12 @@ class TestProfile(APITestCase):
         self.client.force_login(self.user)
         response = self.client.get(self.url, format='json')
         self.assertTrue(response.data['count'])
+
+    def test_delete(self):
+        data = {'confirmation':'confirm'}
+        url = reverse('profile-remove-user')
+        self.client.force_login(self.user)
+        self.assertTrue(User.objects.all().count())
+        response = self.client.post(url, data=data, format='json')
+        self.assertFalse(User.objects.all().count())
 
