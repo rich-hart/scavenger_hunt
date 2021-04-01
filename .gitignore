@@ -2,7 +2,7 @@ venv/
 data/
 .log
 *.log
-hunt/hunt/local.py
+django/hunt/local.py
 __pycache__/
 */__pycache__/
 *.pyc
