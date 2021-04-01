@@ -14,7 +14,7 @@ services:
   backend:
     image: hunt:prod
     container_name: hunt_backend
-    build: hunt
+    build: django
     env_file:
       - prod.env
     depends_on:
@@ -22,7 +22,7 @@ services:
   frontend:
     image: hunt_frontend:prod
     container_name: hunt_frontend
-    build: hunt_frontend
+    build: nodejs
     env_file:
       - prod.env
     depends_on:
