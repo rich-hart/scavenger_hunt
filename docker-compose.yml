@@ -18,7 +18,7 @@ services:
   backend:
     image: hunt:latest
     container_name: hunt_backend
-    build: hunt
+    build: django
     env_file:
       - base.env
     ports:
@@ -29,7 +29,7 @@ services:
   frontend:
     image: hunt_frontend:latest
     container_name: hunt_frontend
-    build: hunt_frontend
+    build: nodejs
     env_file:
       - base.env
     ports:
